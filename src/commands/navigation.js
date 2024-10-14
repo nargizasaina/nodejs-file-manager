@@ -15,7 +15,7 @@ export const goToDedicatedFolder = async (path) => {
     console.log('after access')
     const stat = await fs.promises.stat(newPath);
     if (!stat.isDirectory()) {
-      throw new Error(`Operation failed`);
+      console.log('Operation failed');
     }
     process.chdir(newPath);
     console.log(`Directory changed to: ${newPath}`);
