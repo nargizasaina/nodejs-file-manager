@@ -1,4 +1,5 @@
-import { stdin, stdout } from 'process';
+import { stdin } from 'process';
+import os from 'os';
 import { goToDedicatedFolder, goUpper, listOfFiles } from './commands/navigation.js';
 import { addFile, copyFile, deleteFile, moveFile, readFileAndPrint, renameFile } from './commands/fileOperations.js';
 import { getOsOperations } from './commands/osOperations.js';
@@ -6,9 +7,8 @@ import { hashFile } from './commands/hashOperations.js';
 import { compressFile, decompressFile } from './commands/compressionOperations.js';
 
 const username = process.argv
-  .find(arg => arg.startsWith('--username='))
-  .split('=')[1]
-;
+  .find(arg => arg.startsWith('--username='))?.split('=')[1] || 'Guest';
+  
 const greeting = () => {
   console.log(`Welcome to the File Manager, ${username}!`)
 };
@@ -141,6 +141,7 @@ process.on('SIGINT', () => {
 
 const start = () => {
   greeting();
+  process.chdir(os.homedir());
   printPath();
 
   stdin.setEncoding('utf8');

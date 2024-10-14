@@ -9,7 +9,7 @@ export const goUpper = () => {
 
 export const goToDedicatedFolder = async (path) => {
   try {
-    let current = process.cwd(); console.log(join(current, path))
+    let current = process.cwd();
     const newPath = isAbsolute(path) ? normalize(path) : normalize(join(current, path));
     await access(newPath);
     const statFolder = await stat(newPath);
