@@ -2,6 +2,7 @@ import { stdin, stdout } from 'process';
 import { goToDedicatedFolder, goUpper, listOfFiles } from './commands/navigation.js';
 import { addFile, copyFile, deleteFile, moveFile, readFileAndPrint, renameFile } from './commands/fileOperations.js';
 import { getOsOperations } from './commands/osOperations.js';
+import { hashFile } from './commands/hashOperations.js';
 
 const username = process.argv
   .find(arg => arg.startsWith('--username='))
@@ -10,7 +11,7 @@ const username = process.argv
 const greeting = () => {
   console.log(`Welcome to the File Manager, ${username}!`)
 };
-const printPath = () => {
+export const printPath = () => {
   console.log(`You are currently in ${process.cwd()}`)
 };
 
@@ -105,8 +106,7 @@ const handleInput = (input) => {
         console.log('Invalid input');
         printPath();
       } else {
-        getOsOperations(args[0]);
-        printPath();
+        hashFile(args[0]);
       }
       break;
     default: 
