@@ -3,6 +3,7 @@ import { goToDedicatedFolder, goUpper, listOfFiles } from './commands/navigation
 import { addFile, copyFile, deleteFile, moveFile, readFileAndPrint, renameFile } from './commands/fileOperations.js';
 import { getOsOperations } from './commands/osOperations.js';
 import { hashFile } from './commands/hashOperations.js';
+import { compressFile, decompressFile } from './commands/compressionOperations.js';
 
 const username = process.argv
   .find(arg => arg.startsWith('--username='))
@@ -107,6 +108,22 @@ const handleInput = (input) => {
         printPath();
       } else {
         hashFile(args[0]);
+      }
+      break;
+    case 'compress':
+      if (args.length !== 2) {
+        console.log('Invalid input');
+        printPath();
+      } else {
+        compressFile(args[0], args[1]);
+      }
+      break;
+    case 'decompress':
+      if (args.length !== 2) {
+        console.log('Invalid input');
+        printPath();
+      } else {
+        decompressFile(args[0], args[1]);
       }
       break;
     default: 
