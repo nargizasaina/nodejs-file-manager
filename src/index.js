@@ -16,10 +16,14 @@ export const printPath = () => {
   console.log(`You are currently in ${process.cwd()}`)
 };
 
-const handleInput = (input) => {
+const handleInput = async (input) => {
   const trimmedInput = input.trim();
   const [command, ...args] = trimmedInput.split(' ');
   switch (command.toLowerCase()) {
+    case '.exit':
+      console.log(`Thank you for using File Manager, ${username}, goodbye!`);
+      process.exit(0);
+      break;
     case 'up':
       goUpper();
       printPath();
@@ -30,13 +34,12 @@ const handleInput = (input) => {
         printPath();
       } else {
         const pathToDirectory = args.join(' ');
-        console.log(args)
-        goToDedicatedFolder(pathToDirectory);
+        await goToDedicatedFolder(pathToDirectory);
         printPath();
       }
       break;
     case 'ls':
-      listOfFiles();
+      await listOfFiles();
       printPath();
       break;
     case 'cat':
@@ -44,8 +47,7 @@ const handleInput = (input) => {
         console.log('Invalid input');
         printPath();
       } else {
-        readFileAndPrint(args[0]);
-        printPath();
+        await readFileAndPrint(args[0]);
       }
       break;
     case 'add':
@@ -53,7 +55,7 @@ const handleInput = (input) => {
         console.log('Invalid input');
         printPath();
       } else {
-        addFile(args[0]);
+        await addFile(args[0]);
         printPath();
       }
       break;
@@ -62,7 +64,7 @@ const handleInput = (input) => {
         console.log('Invalid input');
         printPath();
       } else {
-        renameFile(args[0], args[1]);
+        await renameFile(args[0], args[1]);
         printPath();
       }
       break;
@@ -71,7 +73,7 @@ const handleInput = (input) => {
         console.log('Invalid input');
         printPath();
       } else {
-        copyFile(args[0], args[1]);
+        await copyFile(args[0], args[1]);
         printPath();
       }
       break;
@@ -80,7 +82,7 @@ const handleInput = (input) => {
         console.log('Invalid input');
         printPath();
       } else {
-        moveFile(args[0], args[1]);
+        await moveFile(args[0], args[1]);
         printPath();
       }
       break;
@@ -89,7 +91,7 @@ const handleInput = (input) => {
         console.log('Invalid input');
         printPath();
       } else {
-        deleteFile(args[0]);
+        await deleteFile(args[0]);
         printPath();
       }
       break;
@@ -131,6 +133,11 @@ const handleInput = (input) => {
       printPath();
   }
 };
+
+process.on('SIGINT', () => {
+  console.log(`\nThank you for using File Manager, ${username}, goodbye!`);
+  process.exit(0);
+});
 
 const start = () => {
   greeting();

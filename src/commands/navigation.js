@@ -9,12 +9,11 @@ export const goUpper = () => {
 
 export const goToDedicatedFolder = async (path) => {
   try {
-    let current = process.cwd();
+    let current = process.cwd(); console.log(join(current, path))
     const newPath = isAbsolute(path) ? normalize(path) : normalize(join(current, path));
     await access(newPath);
-    console.log('after access')
-    const stat = await fs.promises.stat(newPath);
-    if (!stat.isDirectory()) {
+    const statFolder = await stat(newPath);
+    if (!statFolder.isDirectory()) {
       console.log('Operation failed');
     }
     process.chdir(newPath);
@@ -25,7 +24,7 @@ export const goToDedicatedFolder = async (path) => {
 };
 
 export const listOfFiles = async () => {
-  try {console.log('ls')
+  try {
     const current = process.cwd();
     const files = await readdir(current); 
     const items = [];
@@ -44,7 +43,7 @@ export const listOfFiles = async () => {
     console.log('----------------------------------------------------');
 
     items.forEach((item, index) => {
-      console.log(`${index.toString().padEnd(5)}\t${item.name.padEnd(20)}\t\t${item.type.padEnd(15)}`);
+      console.log(`${(index+1).toString().padEnd(5)}\t${item.name.padEnd(20)}\t\t${item.type.padEnd(15)}`);
     });
 
     console.log('----------------------------------------------------');

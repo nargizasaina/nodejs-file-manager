@@ -1,6 +1,7 @@
 import { join, isAbsolute, dirname, basename } from 'path';
 import {createReadStream, createWriteStream} from 'fs';
 import { access, stat, open, rename, unlink } from 'fs/promises';
+import { printPath } from '../index.js';
 
 export const readFileAndPrint = async (filePath) => {
   try {
@@ -20,7 +21,7 @@ export const readFileAndPrint = async (filePath) => {
       });
       
       readStream.on('end', () => {
-        console.log('\nFile read complete.');
+        printPath();
       });
       
     } else {
@@ -28,6 +29,7 @@ export const readFileAndPrint = async (filePath) => {
     }
   } catch (error) {
     console.log('Operation failed');
+    printPath();
   }
 };
 
